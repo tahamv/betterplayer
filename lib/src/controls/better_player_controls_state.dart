@@ -141,13 +141,9 @@ abstract class BetterPlayerControlsState<T extends StatefulWidget>
 
   void _showSpeedChooserWidget() {
     _showModalBottomSheet([
-      _buildSpeedRow(0.25),
       _buildSpeedRow(0.5),
-      _buildSpeedRow(0.75),
       _buildSpeedRow(1.0),
-      _buildSpeedRow(1.25),
       _buildSpeedRow(1.5),
-      _buildSpeedRow(1.75),
       _buildSpeedRow(2.0),
     ]);
   }
@@ -301,7 +297,7 @@ abstract class BetterPlayerControlsState<T extends StatefulWidget>
       );
     }
 
-    _showModalBottomSheet(children);
+    _showModalBottomSheet(children.length > 5 ? children.sublist(0,5).toList() : children);
   }
 
   Widget _buildTrackRow(BetterPlayerAsmsTrack track, String? preferredName) {
@@ -485,6 +481,7 @@ abstract class BetterPlayerControlsState<T extends StatefulWidget>
     showModalBottomSheet<void>(
       backgroundColor: Colors.transparent,
       context: context,
+      isScrollControlled: true,
       useRootNavigator:
           betterPlayerController?.betterPlayerConfiguration.useRootNavigator ??
               false,
@@ -492,7 +489,7 @@ abstract class BetterPlayerControlsState<T extends StatefulWidget>
         return SafeArea(
           top: false,
           child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
+            physics: NeverScrollableScrollPhysics(),
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
               decoration: BoxDecoration(
